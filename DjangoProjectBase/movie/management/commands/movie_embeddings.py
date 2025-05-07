@@ -1,6 +1,5 @@
 import os
 import numpy as np
-import random
 from django.core.management.base import BaseCommand
 from movie.models import Movie
 from openai import OpenAI
@@ -37,11 +36,3 @@ class Command(BaseCommand):
                 self.stderr.write(f"❌ Failed to generate embedding for {movie.title}: {e}")
 
         self.stdout.write(self.style.SUCCESS("🎯 Finished generating embeddings for all movies"))
-        if movies:
-            random_movie = random.choice(movies)
-            random_embedding = np.frombuffer(random_movie.emb, dtype=np.float32)
-            self.stdout.write(self.style.SUCCESS(f"🎬 Random Movie: {random_movie.title}"))
-            self.stdout.write(f"Embedding: {random_embedding}")
-        else:
-            self.stdout.write(self.style.WARNING("No movies available to show an embedding."))
-
